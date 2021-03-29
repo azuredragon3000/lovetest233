@@ -1,5 +1,7 @@
 package com.myapp.lovetest8121988;
 
+import android.graphics.Bitmap;
+
 public interface startnewview {
 
     void startview1();
@@ -7,4 +9,8 @@ public interface startnewview {
     void startview2();
     void stopview2();
     void backToView();
+    void setAds();
+    void createCustomizeDialog();
+    Bitmap getBitmap(String image);
+
 }

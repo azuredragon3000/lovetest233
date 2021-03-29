@@ -1,49 +1,86 @@
 package com.myapp.lovetest8121988;
 
-import android.app.Activity;
+import android.animation.ObjectAnimator;
+import android.graphics.Bitmap;
 import android.graphics.Point;
+import android.graphics.PointF;
 import android.os.Bundle;
 import android.view.Display;
+import android.widget.ImageView;
 
-public class MainActivity extends Activity implements startnewview{
+import androidx.appcompat.app.AppCompatActivity;
 
-    private View1 view1;
+public class MainActivity extends AppCompatActivity implements startnewview{
+
     private View2 view2;
-    private Preparation preparation;
+    private ViewPreparation viewPreparation;
+    private Point size;
+    private MyInterstitialAd myads;
+    private ImageView imageView;
+    private myDiagLog mydiaglog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         Display display = getWindowManager().getDefaultDisplay();
-        Point size = new Point();
+        size = new Point();
         display.getSize(size);
 
+        /* must  initialize bs as here */
+        BitmapStore bs = BitmapStore.getInstance(this);
+        myads = new MyInterstitialAd("07CC7E40850ABA2DF210A2D2564CAD76",
+                "ca-app-pub-8404443559572571/3715462075",this);
+        viewPreparation = new ViewPreparation(this,this,size);
+        setContentView(viewPreparation);
 
-        preparation = new Preparation(this,this);
-        setContentView(preparation);
+    }
 
+    /* are which other class can called those methods */
+    public void createCustomizeDialog() {
+        mydiaglog = new myDiagLog("What's your name?","OK",this,this);
+    }
+
+    @Override
+    public Bitmap getBitmap(String image) {
+        BitmapStore.addBitmap(this,
+                image,
+                new PointF(size.x, size.y),
+                1, true);
+        Bitmap bitmap = BitmapStore.getBitmap(image);
+        return bitmap;
     }
 
     public void backToView(){
-        setContentView(preparation);
+        setContentView(viewPreparation);
     }
 
+    public void setAds(){
+        myads.load_ad(this);
+    }
 
     @Override
     public void startview1() {
-        view1 = new View1(this,this);
-        setContentView(view1);
-        view1.startgame();
+        imageView = new ImageView(this);
+        ViewLoveDrawable myOrreryDrawable = ViewLoveDrawable.Create(size,this);
+        imageView.setImageDrawable(myOrreryDrawable);
+        imageView.setScaleType(ImageView.ScaleType.FIT_START);
+        setContentView(imageView);
+
+        ObjectAnimator animation = ObjectAnimator.ofFloat(imageView,"translationX",1000f);
+
+        animation.setDuration(5000);
+        animation.start();
     }
 
     @Override
     public void stopview1() {
-        view1.stopgame();
+
     }
 
     @Override
     public void startview2() {
-        view2 = new View2(this,this);
+        view2 = new View2(this,this,size);
         setContentView(view2);
         view2.startgame();
     }
