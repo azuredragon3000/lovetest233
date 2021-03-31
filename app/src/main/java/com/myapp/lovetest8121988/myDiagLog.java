@@ -25,11 +25,6 @@ public class myDiagLog {
         // prompt for username
         alertDialogBuilder.setPositiveButton(ok,new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
-                //and display the username on main activity layout
-                // manName = userAnswer1.getText().toString();
-                // herName = userAnswer2.getText().toString();
-                // String result;
-                // result = manName + "_" + herName;
                 startnewview1.startview1();
             }
         });

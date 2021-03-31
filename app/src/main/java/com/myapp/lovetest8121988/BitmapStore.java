@@ -81,6 +81,4 @@ public class BitmapStore {
         mBitmapsMap.clear();
         mBitmapsReversedMap.clear();
     }
-
-
 }

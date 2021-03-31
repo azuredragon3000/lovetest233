@@ -1,6 +1,7 @@
 package com.myapp.lovetest8121988;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -18,6 +19,9 @@ public class ViewPreparation extends View {
     String result;
     int x,y,padding_x,padding_y;
     protected myRect[] rects;
+    private Bitmap bitmap;
+    private String image;
+
     public ViewPreparation(startnewview startnewview1, Context context, Point mScreenSize) {
 
         super(context);
@@ -29,7 +33,9 @@ public class ViewPreparation extends View {
         y = (int)mScreenSize.y;
         padding_x = x/20;
         padding_y = y/20;
-        rects = new myRect[2];
+        int padding_xx = x/70;
+        int padding_yy = y/70;
+        rects = new myRect[3];
         rects[0] = new myRect(
                 "LOVE TEST",
                 0,
@@ -53,10 +59,18 @@ public class ViewPreparation extends View {
                 (int)mScreenSize.x/35,
                 padding_x, padding_y
         );
+
+        rects[2] = new myRect("X",(7*x)/8 ,0 ,x ,(y/8),
+                Color.argb(100,255,255,255),
+                Color.rgb(30, 34, 233),
+                (int)mScreenSize.x/25,
+                padding_xx, padding_yy);
+        image = "bg";
+        bitmap = startnewview1.getBitmap(image);
     }
 
     protected void onDraw(Canvas canvas){
-        canvas.drawColor(Color.BLUE);
+        canvas.drawBitmap(bitmap, 0, 0, null);
         for(int i=0;i<rects.length;i++){
             rects[i].myDrawRect(canvas,paint);
         }
@@ -71,11 +85,13 @@ public class ViewPreparation extends View {
         if (eventType == MotionEvent.ACTION_UP || eventType == MotionEvent.ACTION_POINTER_UP) {
             if (rects[0].rect.contains(x, y)) {
                 startnewview1.createCustomizeDialog();
-               // startnewview1.setAds();
-               // startnewview1.startview1();
             }
             if (rects[1].rect.contains(x, y)) {
                 startnewview1.startview2();
+            }
+            if (rects[2].rect.contains(x, y)) {
+                // exit
+                startnewview1.exit();
             }
         }
         return true;

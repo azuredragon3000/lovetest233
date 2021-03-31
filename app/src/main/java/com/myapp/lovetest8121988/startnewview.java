@@ -12,5 +12,6 @@ public interface startnewview {
     void setAds();
     void createCustomizeDialog();
     Bitmap getBitmap(String image);
-
+    void startview3();
+    void exit();
 }
