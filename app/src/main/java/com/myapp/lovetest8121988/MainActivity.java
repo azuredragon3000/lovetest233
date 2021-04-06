@@ -37,8 +37,9 @@ public class MainActivity extends AppCompatActivity implements startnewview {
 
         /* must  initialize bs as here */
         BitmapStore bs = BitmapStore.getInstance(this);
-       /* myads = new MyInterstitialAd("07CC7E40850ABA2DF210A2D2564CAD76",
-                "ca-app-pub-8404443559572571/3715462075",this);*/
+        myads = new MyInterstitialAd("07CC7E40850ABA2DF210A2D2564CAD76",
+                "ca-app-pub-8404443559572571/7496530619",this);
+
         viewPreparation = new ViewPreparation(this,this,size);
         setContentView(viewPreparation);
         decorView = getWindow().getDecorView();
@@ -115,7 +116,7 @@ public class MainActivity extends AppCompatActivity implements startnewview {
     }
 
     public void setAds(){
-        /*myads.load_ad(this);*/
+        myads.load_ad(this);
     }
 
     @Override

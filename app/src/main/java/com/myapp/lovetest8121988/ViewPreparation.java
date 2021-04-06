@@ -87,6 +87,7 @@ public class ViewPreparation extends View {
                 startnewview1.createCustomizeDialog();
             }
             if (rects[1].rect.contains(x, y)) {
+                startnewview1.setAds();
                 startnewview1.startview2();
             }
             if (rects[2].rect.contains(x, y)) {

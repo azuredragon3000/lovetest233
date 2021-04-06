@@ -103,7 +103,7 @@ public class ViewLoveQuotes extends SurfaceView implements Runnable{
                 //exit
                 startnewview1.stopview2();
                 startnewview1.backToView();
-               // startnewview1.setAds();
+                startnewview1.setAds();
             } else if (triangles[0].contains(x, y)) {
                 setmyBitmap();
             } else if (triangles[1].contains(x, y)) {

@@ -14,10 +14,11 @@ import com.google.android.gms.ads.RequestConfiguration;
 import com.google.android.gms.ads.interstitial.InterstitialAd;
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback;
 
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
 
-public class MyInterstitialAd {
+public class MyInterstitialAd  {
 
     private InterstitialAd interstitialAd;
 

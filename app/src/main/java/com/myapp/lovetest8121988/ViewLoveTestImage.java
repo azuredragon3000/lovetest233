@@ -31,7 +31,7 @@ public class ViewLoveTestImage extends View {
                 //exit
                 //startnewview1.stopview2();
                 startnewview1.backToView();
-                //startnewview1.setAds();
+                startnewview1.setAds();
             }
         }
         return true;
