@@ -1,4 +1,4 @@
-ObjectView2Spec(Point size) {
+ObjectView3Spec(Point size) {
         super(size);
     }
 
@@ -6,7 +6,7 @@ ObjectView2Spec(Point size) {
         PropertyView[] view;
 
         /* set up property view here */
-        view = new PropertyView[19];
+        view = new PropertyView[16];
 
         view[0] = new PropertyView();
         setUpView(view[0],"background",
@@ -50,32 +50,20 @@ ObjectView2Spec(Point size) {
 
         view[12] = new PropertyView();
         setUpView(view[12],"view point",
-                "TextView",3,0,5,1,null);
-
-        // exit
-        view[18] = new PropertyView();
-        setUpView(view[18],"button",
-                "View",5,0,7,1,null);
+                "TextView",4,0,6,1,null);
 
         view[13] = new PropertyView();
-        setUpView(view[13],"view question",
-                "TextView",1,2,7,6,"ques");
+        setUpView(view[13],"view guideline",
+                "TextView",1,2,7,7,null);
 
+        // ready
         view[14] = new PropertyView();
-        setUpView(view[14],"view option1",
-                "TextView",1,6,4,8,"A");
-
+        setUpView(view[14],"button",
+                "View",1,8,4,10,null);
+        // exit
         view[15] = new PropertyView();
-        setUpView(view[15],"view option2",
-                "TextView",4,6,7,8,"B");
-
-        view[16] = new PropertyView();
-        setUpView(view[16],"view option3",
-                "TextView",1,8,4,10,"C");
-
-        view[17] = new PropertyView();
-        setUpView(view[17],"view option4",
-                "TextView",4,8,7,10,"D");
+        setUpView(view[15],"button",
+                "View",4,8,7,10,null);
 
         return view;
     }
