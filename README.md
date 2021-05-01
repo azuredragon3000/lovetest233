@@ -1,41 +1,112 @@
-  private ChangeView changeView;
-    PropertyView[] pViews;
-    private Rect[] rects;
+ private Point size;
+    private ArrayList<ObjectView> mObjectView;
+    private MFactoryView mFactoryMView;
+    private ArrayList<InputObserver> inputObservers = new ArrayList();
+    private InputViewStart inputViewStart;
+    private InputView1 mInputv1;
+    private InputView2 mInputv2;
+    private InputView3 mInputv3;
 
-    InputViewStart(EngineBroadcaster ger, ChangeView changeView) {
-        ger.addObserver(this);
-        this.changeView = changeView;
-    }
+    private int stage;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        size = MDisplay.getDisplay(this);
+        mFactoryMView = new MFactoryView(this,size);
 
-    public void setRects(PropertyView[] pViews) {
-        this.pViews = pViews;
-        rects = new Rect[pViews.length];
-        for(int i=0;i<pViews.length;i++){
-            rects[i] = pViews[i].position;
-        }
+        inputViewStart = new InputViewStart(this,this);
+        mInputv1 = new InputView1(this,this,this);
+        mInputv2 = new InputView2(this,this);
+        mInputv3 = new InputView3(this,this);
+
+        Question question = getQuestion();
+        mObjectView = new ArrayList<>();
+        mObjectView.add(0,mFactoryMView.create(new ObjectViewStartSpec(size), inputViewStart,question));
+        mObjectView.add(1,mFactoryMView.create(new ObjectView1Spec(size),mInputv1,question));
+        mObjectView.add(2,mFactoryMView.create(new ObjectView2Spec(size),mInputv2,question));
+        mObjectView.add(3,mFactoryMView.create(new ObjectView3Spec(size),mInputv3,question));
+        setViewStart();
     }
 
     @Override
-    public void handleInput(MotionEvent event,int stage) {
-        int i = event.getActionIndex();
-        int x = (int) event.getX(i);
-        int y = (int) event.getY(i);
+    public Question PerlQuestion() {
+        Question question = new Question();
 
-        if(stage == Constants.VIEWSTART) {
-            switch (event.getAction() & MotionEvent.ACTION_MASK) {
-                case MotionEvent.ACTION_UP:
+        question.Question = "Perl";
+        question.A ="A";
+        question.B ="B";
+        question.C ="C";
+        question.D ="D";
 
-                    if (rects[1].contains(x, y)) {
-                        Log.d("DebugViewStart", "vao chuong trinh");
-                        changeView.setView1();
-                    }
+        return question;
+    }
 
-                    if (rects[2].contains(x, y)) {
-                        Log.d("DebugViewStart", "thoat");
-                        //changeView.setView2(VIEW2);
-                    }
+    @Override
+    public Question JavaQuestion() {
+        Question question = new Question();
+        question.Question = "Java";
+        question.A ="A";
+        question.B ="B";
+        question.C ="C";
+        question.D ="D";
+        return question;
+    }
 
-                    break;
-            }
+    @Override
+    public void setViewStart() {
+        int stage = Constants.VIEWSTART;
+        this.stage = stage;
+        setContentView(mObjectView.get(0).mLayout);
+    }
+
+    @Override
+    public void setView1() {
+        int stage = Constants.VIEW1;
+        this.stage = stage;
+
+        setContentView(mObjectView.get(1).mLayout);
+    }
+
+    @Override
+    public void setView2() {
+        int stage = Constants.VIEW2;
+        this.stage = stage;
+        if(mObjectView.get(3).getTag().equals("Java")) {
+            mObjectView.get(2).setQuestion(JavaQuestion());
+        }else if(mObjectView.get(3).getTag().equals("Perl")){
+            mObjectView.get(2).setQuestion(PerlQuestion());
         }
+        setContentView(mObjectView.get(2).mLayout);
+    }
+
+    @Override
+    public void setView3(String question) {
+        int stage = Constants.VIEW3;
+        this.stage = stage;
+        mObjectView.get(3).setTag(question);
+        setContentView(mObjectView.get(3).mLayout);
+    }
+
+    public void addObserver(InputObserver o) {
+        inputObservers.add(o);
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent motionEvent) {
+        for (InputObserver o : inputObservers) {
+            o.handleInput(motionEvent,stage);
+        }
+        return true;
+    }
+
+    private Question getQuestion() {
+        Question question = new Question();
+
+        question.Question = "begin question";
+        question.A = "A";
+        question.B = "B";
+        question.C = "C";
+        question.D = "D";
+
+        return question;
     }
