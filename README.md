@@ -1,29 +1,48 @@
- ObjectViewStartSpec(Point size) {
-        super(size);
+ private ChangeView changeView;
+    private TypeQuestion question;
+    PropertyView[] pViews;
+    private Rect[] rects;
+    InputView1(EngineBroadcaster ger, ChangeView changeView, TypeQuestion question) {
+        ger.addObserver(this);
+        this.changeView = changeView;
+
     }
 
-    PropertyView[] getPropertyView() {
-        PropertyView[] view;
-        Rect Rtemp = new Rect();
-        /* set up property view here */
-        view = new PropertyView[3];
+    @Override
+    public void setRects(PropertyView[] pViews) {
+        this.pViews = pViews;
+        rects = new Rect[pViews.length];
+        for(int i=0;i<pViews.length;i++){
+            rects[i] = pViews[i].position;
+        }
+    }
 
-        view[0] = new PropertyView();
-        view[0].bg = "background";
-        view[0].typeView = "View";
-        view[0].position = new Rect(0,0,x,y);
+    @Override
+    public void handleInput(MotionEvent event,int stage) {
+        int i = event.getActionIndex();
+        int x = (int) event.getX(i);
+        int y = (int) event.getY(i);
 
-        view[1] = new PropertyView();
-        view[1].bg = "button";
-        view[1].typeView = "View";
-        Rtemp = getRect(1,6,4,8);
-        view[1].position = new Rect(Rtemp);
+        if(stage == Constants.VIEW1) {
+            switch (event.getAction() & MotionEvent.ACTION_MASK) {
+                case MotionEvent.ACTION_UP:
 
-        view[2] = new PropertyView();
-        view[2].bg = "button";
-        view[2].typeView = "View";
-        Rtemp = getRect(6,6,9,8);
-        view[2].position = new Rect(Rtemp);
+                    if (rects[1].contains(x, y)) {
+                        Log.d("Debugview1", "java");
+                        changeView.setView3("Java");
+                    }
 
-        return view;
+                    if (rects[2].contains(x, y)) {
+                        Log.d("Debugview1", "perl");
+                        changeView.setView3("Perl");
+                    }
+
+                    if (rects[3].contains(x, y)) {
+                        Log.d("Debugview1", "thoat");
+                        changeView.setViewStart();
+                    }
+
+                    break;
+            }
+        }
     }
