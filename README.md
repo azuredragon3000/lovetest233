@@ -1,34 +1,30 @@
-PropertyView[] view;
-    int x,y;
-
-    ObjectParentViewSpec(Point size){
-        x = size.x;
-        y = size.y;
-        view = getPropertyView();
+ObjectView1Spec(Point size) {
+        super(size);
     }
 
-    public PropertyView[] getView() {
+    PropertyView[] getPropertyView() {
+        PropertyView[] view;
+
+        /* set up property view here */
+        view = new PropertyView[4];
+
+        view[0] = new PropertyView();
+        setUpView(view[0],"background",
+                "View",0,0,10,10,null);
+        // java
+        view[1] = new PropertyView();
+        setUpView(view[1],"button",
+                "View",6,2,9,4,null);
+
+        // perl
+        view[2] = new PropertyView();
+        setUpView(view[2],"button",
+                "View",6,4,9,6,null);
+
+        // exit
+        view[3] = new PropertyView();
+        setUpView(view[3],"button",
+                "View",6,6,9,8,null);
+
         return view;
-    }
-    abstract PropertyView[] getPropertyView();
-
-    Rect getRect(int l, int t, int r, int b) {
-        int temp_l,temp_t,temp_r,temp_b;
-
-        temp_l = (l*x)/10;
-        temp_t = (t*y)/10;
-        temp_r = (r*x)/10;
-        temp_b = (b*y)/10;
-        Rect Rtemp = new Rect(temp_l,temp_t,temp_r,temp_b);
-
-        return Rtemp;
-    }
-
-    void setUpView(PropertyView propertyView, String background, String view, int i1, int i2, int i3, int i4, String question) {
-        Rect Rtemp;
-        propertyView.bg = background;
-        propertyView.typeView = view;
-        Rtemp = getRect(i1,i2,i3,i4);
-        propertyView.position = new Rect(Rtemp);
-        propertyView.question = question;
     }
