@@ -1,8 +1,8 @@
- private ChangeView changeView;
-    private PropertyView[] pViews;
-    private Rect[] rects;
+  private ChangeView changeView;
 
-    InputView2(EngineBroadcaster ger, ChangeView changeView) {
+    PropertyView[] pViews;
+    private Rect[] rects;
+    InputView3(EngineBroadcaster ger, ChangeView changeView) {
         ger.addObserver(this);
         this.changeView = changeView;
     }
@@ -22,16 +22,20 @@
         int x = (int) event.getX(i);
         int y = (int) event.getY(i);
 
-        if(stage == Constants.VIEW2) {
+        if(stage == Constants.VIEW3) {
             switch (event.getAction() & MotionEvent.ACTION_MASK) {
                 case MotionEvent.ACTION_UP:
 
-                    
+                    if (rects[14].contains(x, y)) {
+                        Log.d("Debugview3", "rect1");
+                        changeView.setView2();
+                    }
 
-                    if (rects[18].contains(x, y)) {
-                        Log.d("Debugview2", "exit");
+                    if (rects[15].contains(x, y)) {
+                        Log.d("Debugview3", "rect2");
                         changeView.setViewStart();
                     }
+
                     break;
             }
         }
